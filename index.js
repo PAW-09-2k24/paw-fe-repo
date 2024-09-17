@@ -1,1 +1,0 @@
-const testing = "hallo world";
