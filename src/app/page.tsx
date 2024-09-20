@@ -1,101 +1,169 @@
-import Image from "next/image";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { groupProps, taskProps } from "@/types/types";
+import { useState } from "react";
+
+const groupList: groupProps[] = [
+  {
+    id: "1",
+    title: "Backlog",
+    tasks: [
+      {
+        id: "1",
+        title: "Task1",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Task2",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "In Progress",
+    tasks: [
+      {
+        id: "1",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "In Progress",
+    tasks: [
+      {
+        id: "1",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "In Progress",
+    tasks: [
+      {
+        id: "1",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "In Progress",
+    tasks: [
+      {
+        id: "1",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "In Progress",
+    tasks: [
+      {
+        id: "1",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+      {
+        id: "2",
+        title: "Create a new task",
+        deadline: new Date(),
+        status: "done",
+        description: "Create a new task for the to-do-list app",
+      },
+    ],
+  },
+];
 
 export default function Home() {
+  const [group, setGroup] = useState<groupProps[]>(groupList);
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="bg-[#ffffff] w-screen h-screen relative flex justify-center items-start p-14 text-main">
+      {/* Login & Register */}
+      <div className="absolute top-3 right-5 w-fit h-fit flex flex-row-reverse gap-x-3 text-black font-exo font-bold">
+        <button className="w-32 text-xl font-medium p-3 bg-accent rounded-xl hover:bg-[#2C7A7B] hover:duration-200">Register</button>
+        <button className="w-32 text-xl font-medium p-3 bg-accent rounded-xl hover:bg-[#2C7A7B] hover:duration-200">Login</button>
+      </div>
+      <div className="w-full h-full flex flex-col gap-y-2">
+        <h1 className="text-center text-4xl font-bold ">To-Do-List APP</h1>
+        <h2 className="text-2xl font-bold ">Hai, Arden</h2>
+        <div className="w-full flex justify-center">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <button className="flex flex-col justify-center items-center" >
+          <IoAddCircleOutline className=" text-6xl text-accent hover:text-[#2C7A7B] hover:duration-200" />
+        </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        {/* Task Content */}
+        <div className="min-w-full h-fit flex justify-start overflow-x-hidden p-8 drop-shadow-md">
+          <div className="w-full overflow-x-scroll flex justify-start gap-x-10">
+
+        {groupList.map((group, index) => (
+          <div key={index} className="w-[300px] h-[300px] bg-blue-50 p-2 flex flex-col drop-shadow-md justify-start gap-y-3 text-nowrap relative">
+            <input type="text" name="" id="" className="w-full h-10 p-2 drop-shadow-sm"/>
+            {group.tasks.map((task, index) => (
+              <div key={index} className="w-[300px] h-10 bg-white drop-shadow-sm p-2 flex justify-start gap-x-2">
+                <span className="w-full h-fit text-wrap">{task.title}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+          </div>
+        </div>
+
+
+      </div>
     </div>
   );
 }
