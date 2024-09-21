@@ -1,11 +1,14 @@
 "use client";
 import { IoNewspaper } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { Sidebar } from "@/app/components/Sidebar";
+// import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
   return (
     <div className="w-screen h-screen relative flex justify-center items-center bg-[#ffffff] p-10">
+      <Sidebar/>
       <div className="absolute top-4 left-4 flex justify-start gap-x-2 p-1">
         <IoNewspaper className="text-2xl text-primary-a" />
         <span className="font-exo text-xl text-primary-a font-bold">

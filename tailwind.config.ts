@@ -11,12 +11,19 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: {
-          a: "#273043",
-          b: "#9197ae",
-          c: "#eff6ee",
-          d: "#f02d3a",
-          e: "#dd0426",
+        netral: {
+          100: "#121212",
+          200: "#1d1d1d",
+          300: "#8c8c8c",
+          400: "#a6a6a6",
+          500: "#cbcbcb",
+          600: "#fcfcfc",
+        },
+        utama: {
+          100: "#1d242b",
+          200: "#0077c0",
+          300: "#c7eeff",
+          400: "#fafafa",
         },
         main: '#4A5568', // Neutral gray
         secondary: '#E2E8F0', // Light gray for background

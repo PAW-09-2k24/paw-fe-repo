@@ -12,4 +12,11 @@ interface groupProps{
     tasks: taskProps[];
 }
 
-export type {groupProps, taskProps};
+interface inputProps{
+    type: string;
+    label: string;
+    id: string;
+    placeholder?: string;
+}
+
+export type {groupProps, taskProps, inputProps };
