@@ -13,7 +13,7 @@ export default function MainProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [pageOpen, setPageOpen] = useState<string>("");
+  const [pageOpen, setPageOpen] = useState<string>("grup 1");
   return (
     <MainContext.Provider value={{ pageOpen, setPageOpen }}>
       {children}
