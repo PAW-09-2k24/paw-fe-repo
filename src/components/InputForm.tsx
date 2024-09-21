@@ -2,7 +2,7 @@ import { inputProps } from "@/types/types";
 
 export const InputForm: React.FC<inputProps> = ({id, label, type, placeholder}) => {
   return (
-    <div className="w-full flex flex-col justify-center items-start text-sm">
+    <div className="w-full flex flex-col justify-center items-start text-sm text-netral-600">
       <label htmlFor={id} className="text-start w-full ">
         {label}
       </label>

@@ -2,9 +2,12 @@
 "use client";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { groupProps, taskProps } from "@/types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import Image from "next/image";
+import { InputForm } from "@/components/InputForm";
+import { useRouter } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 const groupList: groupProps[] = [
   {
@@ -130,10 +133,113 @@ const groupList: groupProps[] = [
 ];
 
 export default function Home() {
-  const [group, setGroup] = useState<groupProps[]>(groupList);
+  const router = useRouter();
+  const [type, setType] = useState<"login" | "register">("login");
+  useEffect(() => {}, [type]);
   return (
-    <div className=" w-screen h-screen relative flex justify-center items-start text-main">
-
+    <div className=" w-screen h-screen relative flex justify-center items-center text-main ">
+      {/* Login Section */}
+      <div
+        className={twMerge(
+          "w-[70vw] h-[80%] duration-1000",
+          type === "login" ? "flex flex-row" : "flex flex-row-reverse",
+          " justify-center items-center",
+          "bg-netral-200 relative drop-shadow-md rounded-xl"
+        )}
+      >
+        <div className="absolute w-full h-full blur-lg z-0">
+          <Image src="/login.jpg" alt="logo" fill objectFit="cover" />
+        </div>
+        <div className={twMerge("w-[30%]", "h-full")}></div>
+        {type === "login" ? (
+          <form
+            className={twMerge(
+              "w-[70%]",
+              "h-full flex flex-col justify-center items-center gap-y-4 bg-netral-100/80 backdrop-blur-sm z-[1] rounded-r-xl p-4"
+            )}
+          >
+            <div className="w-full font-exo font-bold text-[85px] flex justify-evenly">
+              <span className="text-netral-600">Hello,</span>
+              <span className="text-utama-200">Welcome!</span>
+            </div>
+            <div className="w-full h-fit flex flex-col gap-y-4 p-5">
+              <InputForm
+                type="text"
+                label="Username"
+                id="username"
+                placeholder="Enter your username"
+              />
+              <InputForm
+                type="password"
+                label="Password"
+                id="password"
+                placeholder="Enter your password"
+              />
+              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50">
+                Log In
+              </button>
+              <div className="flex w-full justify-start gap-x-2">
+                <span className="text-netral-600">{`Don't have account?`}</span>
+                <button
+                  className="text-utama-200 hover:underline"
+                  onClick={() => setType("register")}
+                >
+                  Register
+                </button>
+              </div>
+            </div>
+          </form>
+        ) : (
+          <div
+            className={twMerge(
+              "w-[70%]",
+              "h-full flex flex-col justify-center items-center gap-y-4 bg-netral-100/80 backdrop-blur-sm z-[1] rounded-r-xl p-4"
+            )}
+          >
+            <div className="w-full font-exo font-bold text-[60px] flex flex-col justify-center items-center pl-8">
+              <div className="w-full flex justify-start gap-x-4">
+                <span className="text-netral-600">Create</span>
+                <span className="text-utama-200">Account</span>
+              </div>
+              <span className="text-neutral-500 mt-[-15px] text-[20px] w-full">
+                Organize. Your. Chaos.
+              </span>
+            </div>
+            <div className="w-full h-fit flex flex-col gap-y-4 p-5">
+              <InputForm
+                type="text"
+                label="Username"
+                id="username"
+                placeholder="Enter your username..."
+              />
+              <InputForm
+                type="password"
+                label="Password"
+                id="password"
+                placeholder="Enter your password..."
+              />
+              <InputForm
+                type="password"
+                label="Confirm Password"
+                id="Confirmpassword"
+                placeholder="Confirm Your Password..."
+              />
+              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50">
+                Register
+              </button>
+              <div className="flex w-full justify-start gap-x-2">
+                <span className="text-netral-600">{`Already have account?`}</span>
+                <button
+                  className="text-utama-200 hover:underline"
+                  onClick={() => setType("login")}
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
