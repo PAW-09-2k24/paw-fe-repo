@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Sidebar } from "@/app//components/Sidebar";
 import MainProvider from "@/context/MainContext";
 
 const geistSans = localFont({
@@ -17,6 +18,7 @@ const geistMono = localFont({
 const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
+      
       <MainProvider>{children}</MainProvider>
     </>
   );
@@ -37,7 +39,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          <>
+            <Sidebar />
+          {children}
+          </>
+        </Provider>
       </body>
     </html>
   );

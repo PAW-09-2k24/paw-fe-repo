@@ -1,9 +1,12 @@
 "use client";
 import { createContext, useContext, useState } from "react";
+import { groupProps } from "@/types/types";
 
 interface MainContextProps {
   pageOpen: string;
   setPageOpen: React.Dispatch<React.SetStateAction<string>>;
+  group: groupProps[];
+  setGroup: React.Dispatch<React.SetStateAction<groupProps[]>>;
 }
 
 const MainContext = createContext<MainContextProps | undefined>(undefined);
@@ -13,9 +16,10 @@ export default function MainProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [pageOpen, setPageOpen] = useState<string>("grup 1");
+  const [group, setGroup] = useState<groupProps[]>([]);
+  const [pageOpen, setPageOpen] = useState<string>("all");
   return (
-    <MainContext.Provider value={{ pageOpen, setPageOpen }}>
+    <MainContext.Provider value={{ pageOpen, setPageOpen, group, setGroup }}>
       {children}
     </MainContext.Provider>
   );
