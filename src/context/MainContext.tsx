@@ -17,7 +17,7 @@ export default function MainProvider({
   children: React.ReactNode;
 }) {
   const [group, setGroup] = useState<groupProps[]>([]);
-  const [pageOpen, setPageOpen] = useState<string>("all");
+  const [pageOpen, setPageOpen] = useState<string>("to do");
   return (
     <MainContext.Provider value={{ pageOpen, setPageOpen, group, setGroup }}>
       {children}

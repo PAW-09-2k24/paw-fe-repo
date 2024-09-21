@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 const Group: string[] = ["grup 1", "grup 2", "grup 3"];
-const Tasks: string[] = ["All Tasks (11)", "To do (7)", "Done (4)"];
+const Tasks: string[] = ["To do", "Done"];
 
 export const Sidebar: React.FC = () => {
   const router = useRouter();
@@ -28,6 +28,10 @@ export const Sidebar: React.FC = () => {
     "flex flex-col items-center justify-start p-6 gap-y-6 bg-netral-100 font-exo text-netral-600",
     params === '/login' || params === '/register' || params === '/' ? 'hidden' : ''
     )}>
+      {/* Logout */}
+      <div className="absolute w-[20vw] h-[2vw] bottom-[1vw] left-0 flex justify-center items-center px-6 py-2">
+        <button className="w-full border-[1px] border-netral-400 hover:text-netral-200 hover:bg-netral-400 hover:duration-300 rounded-2xl text-netral-500 text-sm">Logout</button>
+      </div>
       {/* Header */}
       <div className="flex justify-between items-center w-full">
         <span className="font-bold text-[30px]">To-Done-List</span>
@@ -46,25 +50,6 @@ export const Sidebar: React.FC = () => {
             Groups
           </span>
           <div className="w-full h-fit flex flex-col items-center justify-center gap-y-5 pl-1 border-l-[2px] border-netral-400">
-            <div
-              className={twMerge(
-                "w-full pl-7 text-[16px] font-semibold text-netral-300 relative cursor-pointer hover:text-netral-600",
-                "before:absolute before:h-[.1vw] before:w-[1.2vw]",
-                "before:left-[.3vw] before:top-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2 before:bg-netral-400"
-              )}
-              onClick={() => mainContext?.setPageOpen("all")}
-            >
-              <span
-                className={twMerge(
-                  "px-3 py-2",
-                  mainContext?.pageOpen === "all"
-                    ? "bg-netral-600 text-netral-100 rounded-3xl"
-                    : ""
-                )}
-              >
-                All Groups {`(${grupArr.length})`}
-              </span>
-            </div>
             {grupArr.map((item, index) => (
               <div
                 key={index}
@@ -73,7 +58,10 @@ export const Sidebar: React.FC = () => {
                   "before:absolute before:h-[.1vw] before:w-[1.2vw]",
                   "before:left-[.3vw] before:top-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2 before:bg-netral-400"
                 )}
-                onClick={() => mainContext?.setPageOpen(item)}
+                onClick={() => {
+                  mainContext?.setPageOpen(item);
+                  router.push("/to-do/group/" + item.split(" ").join("-").toLowerCase());
+                }}
                 onDoubleClick={() => {
                   inputRef.current?.focus();
                   setOnEdit(item);
@@ -107,7 +95,7 @@ export const Sidebar: React.FC = () => {
                   <span
                     className={twMerge(
                       "px-3 py-2",
-                      mainContext?.pageOpen === item
+                      mainContext?.pageOpen.split(' ').join('').toLowerCase().trim() === item.split(' ').join('').toLowerCase().trim()
                         ? "bg-netral-600 text-netral-100 rounded-3xl"
                         : ""
                     )}
@@ -131,12 +119,15 @@ export const Sidebar: React.FC = () => {
                   "before:absolute before:h-[.1vw] before:w-[1.2vw]",
                   "before:left-[.3vw] before:top-1/2 before:transform before:-translate-x-1/2 before:-translate-y-1/2 before:bg-netral-400"
                 )}
-                onClick={() => mainContext?.setPageOpen(item)}
+                onClick={() => {
+                  mainContext?.setPageOpen(item);
+                  router.push("/to-do/" + item.split(" ").join("-").toLowerCase());
+                }}
               >
                 <span
                   className={twMerge(
                     "px-3 py-2",
-                    mainContext?.pageOpen === item
+                    mainContext?.pageOpen.split(' ').join('').toLowerCase().trim() === item.split(' ').join('').toLowerCase().trim()
                       ? "bg-netral-600 text-netral-100 rounded-3xl"
                       : ""
                   )}
