@@ -3,7 +3,8 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { groupProps, taskProps } from "@/types/types";
 import { useState } from "react";
-import { Sidebar } from "@/app/components/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
+import Image from "next/image";
 
 const groupList: groupProps[] = [
   {
@@ -131,8 +132,8 @@ const groupList: groupProps[] = [
 export default function Home() {
   const [group, setGroup] = useState<groupProps[]>(groupList);
   return (
-    <div className="bg-[#ffffff] w-screen h-screen relative flex justify-center items-start text-main">
-      <Sidebar/>
+    <div className=" w-screen h-screen relative flex justify-center items-start text-main">
+
     </div>
   );
 }

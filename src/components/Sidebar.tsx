@@ -12,7 +12,6 @@ const Tasks: string[] = ["All Tasks (11)", "To do (7)", "Done (4)"];
 export const Sidebar: React.FC = () => {
   const router = useRouter();
   const params = usePathname();
-  console.log(params);
   const mainContext = useMainContext();
   const [onEdit, setOnEdit] = useState<string>("");
   const [grupArr, setGrupArr] = useState<string[]>(Group);
@@ -25,9 +24,9 @@ export const Sidebar: React.FC = () => {
     }
   }, [onEdit]);
   return (
-    <div className={twMerge("fixed w-[20vw] left-0 h-screen", 
+    <div className={twMerge("fixed w-[20vw] left-0 h-screen z-[1]", 
     "flex flex-col items-center justify-start p-6 gap-y-6 bg-netral-100 font-exo text-netral-600",
-    params === '/login' || params === '/register' ? 'hidden' : ''
+    params === '/login' || params === '/register' || params === '/' ? 'hidden' : ''
     )}>
       {/* Header */}
       <div className="flex justify-between items-center w-full">

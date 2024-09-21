@@ -1,7 +1,7 @@
 "use client";
 import { IoNewspaper } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "@/app/components/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
 // import { useState } from "react";
 
 export default function Login() {
