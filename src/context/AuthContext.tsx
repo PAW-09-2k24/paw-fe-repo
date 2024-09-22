@@ -5,6 +5,7 @@ import { apiRoutes } from "@/API/routes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import cookiesHandler from "@/API/cookiesHandler";
+import logoutHandler from "@/API/logoutHandler";
 interface AuthContextProps {
   user: userProps | null;
   setUser: React.Dispatch<React.SetStateAction<userProps | null>>;
@@ -72,7 +73,8 @@ export default function AuthProvider({
     return JSON.parse(jsonPayload);
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
+    await logoutHandler();
     setUser(null);
     router.push("/");
   };
