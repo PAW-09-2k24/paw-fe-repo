@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { groupProps, taskProps } from "@/types/types";
-import { useEffect, useState } from "react";
-import { Sidebar } from "@/components/Sidebar";
+import { ButtonHTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
 import Image from "next/image";
 import { InputForm } from "@/components/InputForm";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import { useAuthContext } from "@/context/AuthContext";
 
 const groupList: groupProps[] = [
   {
@@ -133,9 +132,20 @@ const groupList: groupProps[] = [
 ];
 
 export default function Home() {
-  const router = useRouter();
+  // const router = useRouter();
+  const authContext = useAuthContext();
   const [type, setType] = useState<"login" | "register">("login");
-  useEffect(() => {}, [type]);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    authContext?.onLogin({
+      username: username,
+      password: password,
+    });
+  };
   return (
     <div className=" w-screen h-screen relative flex justify-center items-center text-main ">
       {/* Login Section */}
@@ -157,6 +167,7 @@ export default function Home() {
               "w-[70%]",
               "h-full flex flex-col justify-center items-center gap-y-4 bg-netral-100/80 backdrop-blur-sm z-[1] rounded-r-xl p-4"
             )}
+            onSubmit={handleSubmit}
           >
             <div className="w-full font-exo font-bold text-[85px] flex justify-evenly">
               <span className="text-netral-600">Hello,</span>
@@ -168,14 +179,20 @@ export default function Home() {
                 label="Username"
                 id="username"
                 placeholder="Enter your username"
+                value={username}
+                onChange={(newValue:string) => setUsername(newValue) }
               />
               <InputForm
                 type="password"
                 label="Password"
                 id="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(newValue:string) => setPassword(newValue) }
               />
-              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50">
+              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50" 
+                type="submit"
+              >
                 Log In
               </button>
               <div className="flex w-full justify-start gap-x-2">
@@ -211,18 +228,25 @@ export default function Home() {
                 label="Username"
                 id="username"
                 placeholder="Enter your username..."
+                value={username}
+                onChange={(newValue:string) => setUsername(newValue) }
               />
               <InputForm
                 type="password"
                 label="Password"
                 id="password"
                 placeholder="Enter your password..."
+                value={password}
+                onChange={(newValue:string) => setPassword(newValue) }
+                
               />
               <InputForm
                 type="password"
                 label="Confirm Password"
                 id="Confirmpassword"
                 placeholder="Confirm Your Password..."
+                value={confirmPassword}
+                onChange={(newValue:string) => setConfirmPassword(newValue) }
               />
               <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50">
                 Register

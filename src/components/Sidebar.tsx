@@ -5,6 +5,7 @@ import { useMainContext } from "@/context/MainContext";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext";
 
 const Group: string[] = ["grup 1", "grup 2", "grup 3"];
 const Tasks: string[] = ["To do", "Done"];
@@ -17,6 +18,7 @@ export const Sidebar: React.FC = () => {
   const [grupArr, setGrupArr] = useState<string[]>(Group);
   const [temp, setTemp] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const authContext = useAuthContext();
   // Automatically focus the input when onEdit is set
   useEffect(() => {
     if (onEdit !== "" && inputRef.current) {
@@ -24,13 +26,25 @@ export const Sidebar: React.FC = () => {
     }
   }, [onEdit]);
   return (
-    <div className={twMerge("fixed w-[20vw] left-0 h-screen z-[1]", 
-    "flex flex-col items-center justify-start p-6 gap-y-6 bg-netral-100 font-exo text-netral-600",
-    params === '/login' || params === '/register' || params === '/' ? 'hidden' : ''
-    )}>
+    <div
+      className={twMerge(
+        "fixed w-[20vw] left-0 h-screen z-[1]",
+        "flex flex-col items-center justify-start p-6 gap-y-6 bg-netral-100 font-exo text-netral-600",
+        params === "/login" || params === "/register" || params === "/"
+          ? "hidden"
+          : ""
+      )}
+    >
       {/* Logout */}
       <div className="absolute w-[20vw] h-[2vw] bottom-[1vw] left-0 flex justify-center items-center px-6 py-2">
-        <button className="w-full border-[1px] border-netral-400 hover:text-netral-200 hover:bg-netral-400 hover:duration-300 rounded-2xl text-netral-500 text-sm">Logout</button>
+        <button className="w-full border-[1px] border-netral-400 hover:text-netral-200 hover:bg-netral-400 hover:duration-300 rounded-2xl text-netral-500 text-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            authContext?.onLogout();
+          }}
+        >
+          Logout
+        </button>
       </div>
       {/* Header */}
       <div className="flex justify-between items-center w-full">
@@ -60,7 +74,9 @@ export const Sidebar: React.FC = () => {
                 )}
                 onClick={() => {
                   mainContext?.setPageOpen(item);
-                  router.push("/to-do/group/" + item.split(" ").join("-").toLowerCase());
+                  router.push(
+                    "/to-do/group/" + item.split(" ").join("-").toLowerCase()
+                  );
                 }}
                 onDoubleClick={() => {
                   inputRef.current?.focus();
@@ -95,7 +111,12 @@ export const Sidebar: React.FC = () => {
                   <span
                     className={twMerge(
                       "px-3 py-2",
-                      mainContext?.pageOpen.split(' ').join('').toLowerCase().trim() === item.split(' ').join('').toLowerCase().trim()
+                      mainContext?.pageOpen
+                        .split(" ")
+                        .join("")
+                        .toLowerCase()
+                        .trim() ===
+                        item.split(" ").join("").toLowerCase().trim()
                         ? "bg-netral-600 text-netral-100 rounded-3xl"
                         : ""
                     )}
@@ -121,13 +142,19 @@ export const Sidebar: React.FC = () => {
                 )}
                 onClick={() => {
                   mainContext?.setPageOpen(item);
-                  router.push("/to-do/" + item.split(" ").join("-").toLowerCase());
+                  router.push(
+                    "/to-do/" + item.split(" ").join("-").toLowerCase()
+                  );
                 }}
               >
                 <span
                   className={twMerge(
                     "px-3 py-2",
-                    mainContext?.pageOpen.split(' ').join('').toLowerCase().trim() === item.split(' ').join('').toLowerCase().trim()
+                    mainContext?.pageOpen
+                      .split(" ")
+                      .join("")
+                      .toLowerCase()
+                      .trim() === item.split(" ").join("").toLowerCase().trim()
                       ? "bg-netral-600 text-netral-100 rounded-3xl"
                       : ""
                   )}

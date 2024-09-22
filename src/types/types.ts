@@ -1,3 +1,4 @@
+
 interface taskProps{
     id: string;
     title: string;
@@ -17,6 +18,14 @@ interface inputProps{
     label: string;
     id: string;
     placeholder?: string;
+    value?: string;
+    onChange: (newValue: string ) => void;
 }
 
-export type {groupProps, taskProps, inputProps };
+interface userProps{
+    id: string;
+    username: string;
+    token?: string;
+}
+
+export type {groupProps, taskProps, inputProps, userProps};

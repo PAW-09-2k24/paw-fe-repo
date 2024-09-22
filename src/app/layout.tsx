@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import MainProvider from "@/context/MainContext";
+import AuthProvider from "@/context/AuthContext";
 import Image from "next/image";
 
 const geistSans = localFont({
@@ -19,7 +20,9 @@ const geistMono = localFont({
 const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <MainProvider>{children}</MainProvider>
+      <AuthProvider>
+        <MainProvider>{children}</MainProvider>
+      </AuthProvider>
     </>
   );
 };

@@ -1,12 +1,14 @@
 import { BiSearch } from "react-icons/bi";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { TaskCard } from "./TaskCard";
+import { useAuthContext } from "@/context/AuthContext";
 
 export const ToDoContent: React.FC = () => {
+  const authContext = useAuthContext();
   return (
     <div className="w-screen h-screen bg-netral-200 relative font-exo pl-[22.5vw] pt-[3vw] pb-[2.5vw] flex justify-center items-center pr-[2.5vw]">
       <span className="font-medium text-netral-600 text-[20px] absolute top-[.7vw] left-[22.5vw]">
-        Welcome back, Agus!
+        Welcome back, {authContext?.user?.username}!
       </span>
       <button className="absolute top-[.7vw] right-[2.5vw]">
         <BiSearch className="text-[24px] text-netral-600" />
