@@ -36,7 +36,7 @@ export default function Home() {
 
   
   return (
-    <div className=" w-screen h-screen relative flex justify-center items-center text-main ">
+    <div className=" w-screen h-screen relative flex justify-center items-center text-main bg-netral-100">
       {/* Login Section */}
       <div
         className={twMerge(

@@ -12,6 +12,8 @@ import axios from "axios";
 import { apiRoutes } from "@/API/routes";
 import { useAuthContext } from "./AuthContext";
 import ModalForm from "@/components/ModalForm";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface MainContextProps {
   pageOpen: string;
@@ -89,7 +91,7 @@ export default function MainProvider({
   children: React.ReactNode;
 }) {
   const authContext = useAuthContext();
-  console.log("USER BANG:", authContext?.user);
+  // console.log("USER BANG:", authContext?.user);
   const [group, setGroup] = useState<groupProps[]>([]);
   const [groupTemp, setGroupTemp] = useState<groupProps | undefined>(undefined);
   const [task, setTask] = useState<taskProps[] | undefined>(undefined);
@@ -100,6 +102,7 @@ export default function MainProvider({
   const [countTask, setCountTask] = useState<taskGroupCountProps>();
 
   const getGroupData = useCallback((user: userProps) => {
+    // toast("Fetching data...");
     axios
       .get(apiRoutes.groups.user, {
         params: {
@@ -118,12 +121,14 @@ export default function MainProvider({
             tasks: group.tasks as taskProps[],
           };
         });
-        console.log(res.data.message);
-        console.log(groupData);
+        // toast.success(res.data.message);
+        // console.log(res.data.message);
+        // console.log(groupData);
         setGroup(groupData);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
+        // console.log(err);
       });
   }, []);
   const getCountTask = useCallback((user: userProps) => {
@@ -157,6 +162,7 @@ export default function MainProvider({
     groupID: string;
     groupTitle: string;
   }) => {
+    toast("Updating group...");
     axios
       .patch(
         apiRoutes.groups.main,
@@ -174,11 +180,13 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
+        // console.log(err);
       });
   };
 
@@ -189,6 +197,7 @@ export default function MainProvider({
     userID: string;
     groupTitle: string;
   }) => {
+    toast("Creating group...");
     axios
       .post(
         apiRoutes.groups.main,
@@ -206,12 +215,14 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message);
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
+        // console.log(err);
       });
   };
   const updateTask = ({
@@ -228,6 +239,7 @@ export default function MainProvider({
     status: string;
     description: string;
   }) => {
+    toast("Updating task...");
     axios
       .patch(
         apiRoutes.tasks.main,
@@ -248,12 +260,14 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message);
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
+        // console.log(err);
       });
   };
   const createTask = ({
@@ -270,6 +284,7 @@ export default function MainProvider({
     status: string;
     description: string;
   }) => {
+    toast("Creating task...");
     axios
       .post(
         apiRoutes.tasks.main,
@@ -290,12 +305,14 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message);
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
+        // console.log(err);
       });
   };
   const deleteTask = ({
@@ -303,6 +320,7 @@ export default function MainProvider({
   }: {
     taskID: string;
   }) => {
+    toast("Deleting task...");
     axios
       .delete(
         apiRoutes.tasks.main,
@@ -317,12 +335,14 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message);
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
+        // console.log(err);
       });
   };
   const deleteGroup = ({
@@ -330,6 +350,7 @@ export default function MainProvider({
   }: {
     groupID: string;
   }) => {
+    toast("Deleting group...");
     axios
       .delete(
         apiRoutes.groups.main,
@@ -344,12 +365,14 @@ export default function MainProvider({
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
+        toast.success(res.data.message)
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
+        // console.log(err);
       });
   };
 
@@ -392,6 +415,7 @@ export default function MainProvider({
         setCountTask
       }}
     >
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce}/>
       {modal && (
           <div className="w-screen h-screen fixed flex justify-center items-center bg-black z-10">
             <ModalForm show={modal} type={modalType as "create" | "update"}/>

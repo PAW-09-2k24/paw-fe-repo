@@ -6,6 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import cookiesHandler from "@/API/cookiesHandler";
 import logoutHandler from "@/API/logoutHandler";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface AuthContextProps {
   user: userProps | undefined;
   setUser: React.Dispatch<React.SetStateAction<userProps | undefined>>;
@@ -36,6 +38,7 @@ export default function AuthProvider({
     username: string;
     password: string;
   }) => {
+    toast("Logging in...");
     axios
       .post(
         apiRoutes.auth.login,
@@ -50,10 +53,11 @@ export default function AuthProvider({
           username: userData.username,
           token: token,
         });
-        console.log(res.data.message);
+        toast.success(res.data.message);
         router.push("/to-do");
       })
       .catch((err) => {
+        toast.error(err.response.data.message);
         console.log(err);
       });
   };
@@ -75,8 +79,10 @@ export default function AuthProvider({
   };
 
   const onLogout = async () => {
+    toast("Logging out...", );
     await logoutHandler();
     setUser(undefined);
+    toast.success("Logged out successfully");
     router.push("/");
   };
 
@@ -118,6 +124,7 @@ export default function AuthProvider({
 
   return (
     <AuthContext.Provider value={{ user, setUser, onLogin, onLogout, onRegister }}>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce}/>
       {children}
     </AuthContext.Provider>
   );
