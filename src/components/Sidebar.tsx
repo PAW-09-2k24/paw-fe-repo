@@ -10,6 +10,8 @@ import { useAuthContext } from "@/context/AuthContext";
 const Group: string[] = ["grup 1", "grup 2", "grup 3"];
 const Tasks: string[] = ["To do", "Done"];
 
+const hiddenArr = ["/", "/register", "/testFitur"]
+
 export const Sidebar: React.FC = () => {
   const router = useRouter();
   const params = usePathname();
@@ -30,7 +32,7 @@ export const Sidebar: React.FC = () => {
       className={twMerge(
         "fixed w-[20vw] left-0 h-screen z-[1]",
         "flex flex-col items-center justify-start p-6 gap-y-6 bg-netral-100 font-exo text-netral-600",
-        params === "/login" || params === "/register" || params === "/"
+        hiddenArr.includes(params)
           ? "hidden"
           : ""
       )}

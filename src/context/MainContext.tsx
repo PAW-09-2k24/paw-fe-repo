@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { createContext, useContext, useState } from "react";
-import { groupProps } from "@/types/types";
+import { createContext, use, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { groupProps, taskProps, userProps } from "@/types/types";
 import axios from "axios";
 import { apiRoutes } from "@/API/routes";
 import { useAuthContext } from "./AuthContext";
@@ -20,27 +21,60 @@ export default function MainProvider({
   children: React.ReactNode;
 }) {
   const authContext = useAuthContext();
+  console.log("USER BANG:",authContext?.user);
   const [group, setGroup] = useState<groupProps[]>([]);
+  const [groupTemp, setGroupTemp] = useState<groupProps | undefined>(undefined);
+  const [task, setTask] = useState<taskProps[] | undefined>(undefined);
+  const [taskTemp, setTaskTemp] = useState<taskProps | undefined>(undefined);
   const [pageOpen, setPageOpen] = useState<string>("to do");
 
-  const getGroup = async () => {
+  // const groupRef = useRef(setGroup);
+
+  // useEffect(() => {
+  //   groupRef.current = setGroup;
+  // }, [setGroup]);
+
+  const getGroupData = useCallback((user:userProps) => {
     axios.get(apiRoutes.groups.user,{
-      headers: {
-        Authorization: `Bearer ${authContext?.user?.token}`,
-      },
       params:{
-        userID: authContext?.user?.id,
-      }
+        userID: user.id,
+      },
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      
     }).then((res) => {
-      const group = res.data.data;
+      const groupData = res.data.data.map((group: groupProps) => {
+        return{
+          id: group._id,
+          title: group.title,
+          taskID: group.taskID,
+          tasks: group.tasks,
+        }
+      });
       console.log(res.data.message);
-      setGroup(group);
+      console.log(groupData);
+      setGroup(groupData);
     }).catch((err) => {
       console.log(err);
     });
-  }
+  },[]);
 
+  // const getGroupDataRef = useRef(getGroupData);
+
+  // useEffect(() => {
+  //   getGroupDataRef.current = getGroupData;
+  // }, [getGroupData]);
+
+  useEffect(() => {
+    if (authContext?.user) {
+      pageOpen && getGroupData(authContext.user);
+    }
+  }, [authContext?.user, getGroupData, taskTemp, pageOpen]);
   
+  useEffect(() => {
+    console.log("GROUP:",group);
+  },[group]);
 
   return (
     <MainContext.Provider value={{ pageOpen, setPageOpen, group, setGroup }}>

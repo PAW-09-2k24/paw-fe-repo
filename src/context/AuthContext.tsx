@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import cookiesHandler from "@/API/cookiesHandler";
 import logoutHandler from "@/API/logoutHandler";
 interface AuthContextProps {
-  user: userProps | null;
-  setUser: React.Dispatch<React.SetStateAction<userProps | null>>;
+  user: userProps | undefined;
+  setUser: React.Dispatch<React.SetStateAction<userProps | undefined>>;
   onLogin: ({
     username,
     password,
@@ -17,6 +17,7 @@ interface AuthContextProps {
     password: string;
   }) => void;
   onLogout: () => void;
+  onRegister: ({username, password}: {username: string, password: string}) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -27,7 +28,7 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [user, setUser] = useState<userProps | null>(null);
+  const [user, setUser] = useState<userProps | undefined>(undefined);
   const onLogin = ({
     username,
     password,
@@ -42,11 +43,11 @@ export default function AuthProvider({
         { withCredentials: true }
       )
       .then((res) => {
-        const user = res.data.data;
+        const userData = res.data.data;
         const token = res.data.token;
         setUser({
-          id: user.id,
-          username: user.username,
+          id: userData.id,
+          username: userData.username,
           token: token,
         });
         console.log(res.data.message);
@@ -75,20 +76,21 @@ export default function AuthProvider({
 
   const onLogout = async () => {
     await logoutHandler();
-    setUser(null);
+    setUser(undefined);
     router.push("/");
   };
 
   const getCookies =  async () => {
     const token = await cookiesHandler();
     if (token) {
-      const user = parseJWT(token);
-      console.log("USER: ",user);
+      const userData = parseJWT(token);
       setUser({
-        id: user.id,
-        username: user.username,
-      });
-      router.push("/to-do");
+        id: userData.id,
+        username: userData.username,
+        token: token,
+      }); 
+      console.log("USER: ",userData);
+      console.log("TOKEN: ",token);
     }
     else {
       router.push("/");
@@ -96,15 +98,26 @@ export default function AuthProvider({
     return token;
   };
 
+
+  const onRegister = ({username, password}: {username: string, password: string}) => {
+    axios.post(apiRoutes.auth.register, {username, password})
+    .then((res) => {
+      console.log(res.data.message);
+      router.push("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
   const getCookiesRef = useRef(getCookies);
   
-
   useEffect(() => {
     if (router) getCookiesRef.current();
   },[router]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, onLogin, onLogout }}>
+    <AuthContext.Provider value={{ user, setUser, onLogin, onLogout, onRegister }}>
       {children}
     </AuthContext.Provider>
   );

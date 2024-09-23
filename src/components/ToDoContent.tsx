@@ -5,6 +5,7 @@ import { useAuthContext } from "@/context/AuthContext";
 
 export const ToDoContent: React.FC = () => {
   const authContext = useAuthContext();
+  // const mainContext = useMainContext();
   return (
     <div className="w-screen h-screen bg-netral-200 relative font-exo pl-[22.5vw] pt-[3vw] pb-[2.5vw] flex justify-center items-center pr-[2.5vw]">
       <span className="font-medium text-netral-600 text-[20px] absolute top-[.7vw] left-[22.5vw]">
@@ -29,7 +30,6 @@ export const ToDoContent: React.FC = () => {
         </div>
         <div className="w-full h-full flex-wrap">
             <TaskCard />
-
         </div>
       </div>
     </div>

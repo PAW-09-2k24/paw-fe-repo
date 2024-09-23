@@ -3,6 +3,7 @@ const mainRoute = process.env.NEXT_PUBLIC_API_URL;
 //auth
 const loginRoute = `${mainRoute}/user/login`;
 const logoutRoute = `${mainRoute}/user/logout`;
+const registerRoute = `${mainRoute}/user`;
 
 //groups
 const groupsRoute = `${mainRoute}/groups`;
@@ -17,6 +18,7 @@ export const apiRoutes = {
   auth: {
     login: loginRoute,
     logout: logoutRoute,
+    register: registerRoute
   },
   groups: {
     main: groupsRoute,

@@ -8,8 +8,9 @@ interface taskProps{
 }
 
 interface groupProps{
-    id: string;
+    _id: string;
     title: string;
+    taskID: string[];
     tasks: taskProps[];
 }
 
@@ -28,4 +29,11 @@ interface userProps{
     token?: string;
 }
 
-export type {groupProps, taskProps, inputProps, userProps};
+interface taskGroupCountProps{
+    groupCount: string;
+    taskCount: string;
+    completedCount: string;
+    uncompletedCount: string;
+}
+
+export type {groupProps, taskProps, inputProps, userProps, taskGroupCountProps};

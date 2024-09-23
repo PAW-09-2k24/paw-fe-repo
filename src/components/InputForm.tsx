@@ -1,3 +1,4 @@
+"use client";
 import { inputProps } from "@/types/types";
 import { useState } from "react";
 import { IoEyeSharp } from "react-icons/io5";

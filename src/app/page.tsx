@@ -8,132 +8,12 @@ import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useAuthContext } from "@/context/AuthContext";
 
-const groupList: groupProps[] = [
-  {
-    id: "1",
-    title: "Backlog",
-    tasks: [
-      {
-        id: "1",
-        title: "Task1",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Task2",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    tasks: [
-      {
-        id: "1",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    tasks: [
-      {
-        id: "1",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    tasks: [
-      {
-        id: "1",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    tasks: [
-      {
-        id: "1",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "In Progress",
-    tasks: [
-      {
-        id: "1",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-      {
-        id: "2",
-        title: "Create a new task",
-        deadline: new Date(),
-        status: "done",
-        description: "Create a new task for the to-do-list app",
-      },
-    ],
-  },
-];
-
 export default function Home() {
-  // const router = useRouter();
+  const router = useRouter();
   const authContext = useAuthContext();
+  if (authContext?.user) {
+    router.push("/to-do");
+  }
   const [type, setType] = useState<"login" | "register">("login");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -146,6 +26,15 @@ export default function Home() {
       password: password,
     });
   };
+  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    authContext?.onRegister({
+      username: username,
+      password: password,
+    });
+  };
+
+  
   return (
     <div className=" w-screen h-screen relative flex justify-center items-center text-main ">
       {/* Login Section */}
@@ -222,7 +111,7 @@ export default function Home() {
                 Organize. Your. Chaos.
               </span>
             </div>
-            <div className="w-full h-fit flex flex-col gap-y-4 p-5">
+            <form className="w-full h-fit flex flex-col gap-y-4 p-5" onSubmit={handleRegister}>
               <InputForm
                 type="text"
                 label="Username"
@@ -248,7 +137,15 @@ export default function Home() {
                 value={confirmPassword}
                 onChange={(newValue:string) => setConfirmPassword(newValue) }
               />
-              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50">
+              {password !== confirmPassword ? (
+                <span className="text-red-500">{`Password doesn't match`}</span>
+              ) : (
+                null
+              )}
+              <button className="w-full h-fit text-center p-[6px] bg-utama-200 rounded-lg text-netral-600 hover:bg-utama-200/50 disabled:cursor-not-allowed disabled:bg-netral-300"
+                disabled={password !== confirmPassword}
+                type="submit"
+              >
                 Register
               </button>
               <div className="flex w-full justify-start gap-x-2">
@@ -260,7 +157,7 @@ export default function Home() {
                   Login
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         )}
       </div>
