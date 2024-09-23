@@ -135,7 +135,7 @@ export const Sidebar: React.FC = () => {
                         mainContext?.setPageOpen(
                           (temp as groupProps[])[index].id as string
                         );
-                        console.log("CEKK: ", temp?.[index].id);
+                        // console.log("CEKK: ", temp?.[index].id);
                         if (temp?.[index].id === undefined) {
                           mainContext?.createGroup({
                             userID: authContext?.user?.id as string,

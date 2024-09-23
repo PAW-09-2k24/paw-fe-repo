@@ -58,7 +58,7 @@ export default function AuthProvider({
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -95,8 +95,8 @@ export default function AuthProvider({
         username: userData.username,
         token: token,
       }); 
-      console.log("USER: ",userData);
-      console.log("TOKEN: ",token);
+      // console.log("USER: ",userData);
+      // console.log("TOKEN: ",token);
     }
     else {
       router.push("/");
@@ -106,13 +106,16 @@ export default function AuthProvider({
 
 
   const onRegister = ({username, password}: {username: string, password: string}) => {
+    toast("Registering...");
     axios.post(apiRoutes.auth.register, {username, password})
     .then((res) => {
-      console.log(res.data.message);
+      toast.success(res.data.message);
+      // console.log(res.data.message);
       router.push("/");
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response.data.message);
+      // console.log(err);
     });
   };
 

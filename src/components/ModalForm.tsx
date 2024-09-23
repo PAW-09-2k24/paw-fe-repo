@@ -15,7 +15,7 @@ export default function ModalForm({
   const [taskData, setTaskData] = useState<taskProps>(
     mainContext?.taskTemp as taskProps
   );
-  console.log("TASKDATA: ", taskData);
+  // console.log("TASKDATA: ", taskData);
   const handleCloseModal = () => {
     mainContext?.setTaskTemp(undefined);
     mainContext?.setModal(false);

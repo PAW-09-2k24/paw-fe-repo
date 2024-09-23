@@ -37,7 +37,7 @@ export const TaskCard: React.FC<taskCard> = ({
   };
   const [filteredGroup, setFilteredGroup] = useState<filteredGroup>(findGroupIDsByTaskID(_id, mainContext?.group as groupProps[])[0]);
   // const groups = findGroupsByTaskID(_id, mainContext?.group as groupProps[] );
-  console.log("FILTER: ",filteredGroup);
+  // console.log("FILTER: ",filteredGroup);
   useEffect(() => {
     setFilteredGroup(findGroupIDsByTaskID(_id, mainContext?.group as groupProps[])[0]);
   }, [mainContext, path, _id]);

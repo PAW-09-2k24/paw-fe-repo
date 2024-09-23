@@ -16,7 +16,7 @@ export const ToDoContent: React.FC = () => {
   const router = useRouter();
   const id = params.split("/")[3];
   const taskPage = params.split("/")[2];
-  console.log("TASK PAGE: ",taskPage);
+  // console.log("TASK PAGE: ",taskPage);
   const [selectedGroupID, setSelectedGroupID] = useState<groupProps>(
     mainContext?.group.find((group) => group.id === id) as groupProps
   );
