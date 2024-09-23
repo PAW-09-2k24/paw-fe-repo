@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
-import { groupProps } from "@/types/types";
+import { groupProps, taskGroupCountProps } from "@/types/types";
 
 // const Group: string[] = ["grup 1", "grup 2", "grup 3"];
 const Tasks: string[] = ["To do", "Done"];
@@ -24,6 +24,9 @@ export const Sidebar: React.FC = () => {
   const [temp, setTemp] = useState<groupProps[] | undefined>(
     mainContext?.group
   );
+  const [countTask, setCountTask] = useState<taskGroupCountProps | undefined>(
+    mainContext?.countTask
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const authContext = useAuthContext();
   // Automatically focus the input when onEdit is set
@@ -35,7 +38,11 @@ export const Sidebar: React.FC = () => {
 
   useEffect(() => {
     setGrupArr(mainContext?.group);
-  }, [mainContext?.group]);
+  }, [mainContext?.group, router]);
+
+  useEffect(() => {
+    setCountTask(mainContext?.countTask);
+  }, [mainContext?.countTask, router]);
 
   return (
     <div
@@ -128,7 +135,7 @@ export const Sidebar: React.FC = () => {
                         mainContext?.setPageOpen(
                           (temp as groupProps[])[index].id as string
                         );
-                        console.log("CEKK: ",temp?.[index].id);
+                        console.log("CEKK: ", temp?.[index].id);
                         if (temp?.[index].id === undefined) {
                           mainContext?.createGroup({
                             userID: authContext?.user?.id as string,
@@ -186,7 +193,9 @@ export const Sidebar: React.FC = () => {
                       : ""
                   )}
                 >
-                  {item}
+                  {item === "To do"
+                    ? `${item} (${countTask?.uncompletedCount?.toString()})`
+                    : `${item} (${countTask?.completedCount?.toString()})`}
                 </span>
               </div>
             ))}

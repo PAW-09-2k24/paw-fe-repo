@@ -39,10 +39,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-netral-100`}
-      >
-        <Provider>
+      <Provider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-netral-100 z-0`}
+        >
           <>
             <Sidebar />
             <div className="absolute w-screen h-screen z-0">
@@ -50,8 +50,8 @@ export default function RootLayout({
             </div>
             {children}
           </>
-        </Provider>
-      </body>
+        </body>
+      </Provider>
     </html>
   );
 }

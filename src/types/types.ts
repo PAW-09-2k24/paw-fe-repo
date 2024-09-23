@@ -30,10 +30,10 @@ interface userProps{
 }
 
 interface taskGroupCountProps{
-    groupCount: string;
-    taskCount: string;
-    completedCount: string;
-    uncompletedCount: string;
+    groupCount: number;
+    taskCount: number;
+    completedCount: number;
+    uncompletedCount: number;
 }
 
 export type {groupProps, taskProps, inputProps, userProps, taskGroupCountProps};

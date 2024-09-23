@@ -2,14 +2,12 @@
 "use client";
 import {
   createContext,
-  use,
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { groupProps, taskProps, userProps } from "@/types/types";
+import { groupProps, taskGroupCountProps, taskProps, userProps } from "@/types/types";
 import axios from "axios";
 import { apiRoutes } from "@/API/routes";
 import { useAuthContext } from "./AuthContext";
@@ -72,6 +70,10 @@ interface MainContextProps {
   setTaskTemp: React.Dispatch<React.SetStateAction<taskProps | undefined>>;
   modalType: "create" | "update" | "";
   setModalType: React.Dispatch<React.SetStateAction<"create" | "update">>;
+  deleteTask: ({taskID}:{taskID:string}) => void;
+  deleteGroup: ({groupID}:{groupID:string}) => void;
+  countTask?: taskGroupCountProps | undefined;
+  setCountTask: React.Dispatch<React.SetStateAction<taskGroupCountProps | undefined>>;
 
 }
 
@@ -95,6 +97,7 @@ export default function MainProvider({
   const [pageOpen, setPageOpen] = useState<string>("to do");
   const [modal, setModal] = useState<boolean>(false);
   const [modalType, setModalType] = useState<"create" | "update" >("update");
+  const [countTask, setCountTask] = useState<taskGroupCountProps>();
 
   const getGroupData = useCallback((user: userProps) => {
     axios
@@ -118,6 +121,29 @@ export default function MainProvider({
         console.log(res.data.message);
         console.log(groupData);
         setGroup(groupData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const getCountTask = useCallback((user: userProps) => {
+    axios
+      .get(apiRoutes.groups.count, {
+        params: {
+          userID: user.id,
+        },
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((res) => {
+        const groupData = res.data.data;
+        setCountTask({
+          groupCount: groupData.groupCount,
+          taskCount: groupData.taskCount,
+          completedCount: groupData.completedCount,
+          uncompletedCount: groupData.uncompletedCount,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -149,6 +175,7 @@ export default function MainProvider({
       )
       .then((res) => {
         console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
       })
       .catch((err) => {
         console.log(err);
@@ -180,6 +207,8 @@ export default function MainProvider({
       )
       .then((res) => {
         console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
+
       })
       .catch((err) => {
         console.log(err);
@@ -220,6 +249,8 @@ export default function MainProvider({
       )
       .then((res) => {
         console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
+
       })
       .catch((err) => {
         console.log(err);
@@ -260,21 +291,79 @@ export default function MainProvider({
       )
       .then((res) => {
         console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteTask = ({
+    taskID,
+  }: {
+    taskID: string;
+  }) => {
+    axios
+      .delete(
+        apiRoutes.tasks.main,
+        {
+          params: {
+            taskID: taskID,
+          },
+          headers: {
+            Authorization: `Bearer ${authContext?.user?.token}`,
+            withCredentials: true,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deleteGroup = ({
+    groupID,
+  }: {
+    groupID: string;
+  }) => {
+    axios
+      .delete(
+        apiRoutes.groups.main,
+        {
+          params: {
+            groupID: groupID,
+          },
+          headers: {
+            Authorization: `Bearer ${authContext?.user?.token}`,
+            withCredentials: true,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.message);
+        getGroupData(authContext?.user as userProps);
+
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  useEffect(() => {
-    if (authContext?.user) {
-      pageOpen && getGroupData(authContext.user);
-    }
-  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal]);
+
+
+
 
   useEffect(() => {
-    console.log("GROUP:", group);
-  }, [group]);
+    if (authContext?.user && pageOpen) {
+       getGroupData(authContext.user); 
+       getCountTask(authContext.user);
+    }
+  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal, getCountTask]);
+
 
   return (
     <MainContext.Provider
@@ -285,6 +374,7 @@ export default function MainProvider({
         setGroup,
         updateGroup,
         createGroup,
+        deleteGroup,
         groupTemp,
         setGroupTemp,
         task,
@@ -295,8 +385,11 @@ export default function MainProvider({
         setTaskTemp,
         updateTask,
         createTask,
+        deleteTask,
         modalType,
         setModalType,
+        countTask,
+        setCountTask
       }}
     >
       {modal && (
