@@ -12,7 +12,7 @@ import axios from "axios";
 import { apiRoutes } from "@/API/routes";
 import { useAuthContext } from "./AuthContext";
 import ModalForm from "@/components/ModalForm";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface MainContextProps {
@@ -415,7 +415,6 @@ export default function MainProvider({
         setCountTask
       }}
     >
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" transition={Bounce}/>
       {modal && (
           <div className="w-screen h-screen fixed flex justify-center items-center bg-black z-10">
             <ModalForm show={modal} type={modalType as "create" | "update"}/>
