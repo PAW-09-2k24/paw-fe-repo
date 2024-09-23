@@ -12,6 +12,11 @@ interface taskCard extends taskProps {
   type: "group" | "task";
 }
 
+interface filteredGroup{
+  id: string | undefined;
+  title: string;
+}
+
 export const TaskCard: React.FC<taskCard> = ({
   title,
   deadline,
@@ -30,12 +35,12 @@ export const TaskCard: React.FC<taskCard> = ({
     mainContext?.setModalType("update");
     mainContext?.setModal(true);
   };
-  const [filteredGroup, setFilteredGroup] = useState<any>(findGroupIDsByTaskID(_id, mainContext?.group as groupProps[])[0]);
+  const [filteredGroup, setFilteredGroup] = useState<filteredGroup>(findGroupIDsByTaskID(_id, mainContext?.group as groupProps[])[0]);
   // const groups = findGroupsByTaskID(_id, mainContext?.group as groupProps[] );
   console.log("FILTER: ",filteredGroup);
   useEffect(() => {
     setFilteredGroup(findGroupIDsByTaskID(_id, mainContext?.group as groupProps[])[0]);
-  }, [mainContext, path]);
+  }, [mainContext, path, _id]);
 
   return (
     <div className="w-[20vw] aspect-[4/2] relative flex flex-col justify-start items-center p-4 bg-utama-100 rounded-lg drop-shadow-md font-exo">
