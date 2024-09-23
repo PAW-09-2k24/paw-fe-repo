@@ -1,6 +1,6 @@
 
 interface taskProps{
-    id: string;
+    _id: string;
     title: string;
     deadline: Date;
     status: string;
@@ -8,9 +8,9 @@ interface taskProps{
 }
 
 interface groupProps{
-    _id: string;
+    id?: string;
     title: string;
-    taskID: string[];
+    taskID?: string[];
     tasks: taskProps[];
 }
 
