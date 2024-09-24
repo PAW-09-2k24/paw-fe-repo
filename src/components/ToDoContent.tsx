@@ -1,4 +1,4 @@
-import { BiSearch } from "react-icons/bi";
+// import { BiSearch } from "react-icons/bi";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { TaskCard } from "./TaskCard";
 import { useAuthContext } from "@/context/AuthContext";
