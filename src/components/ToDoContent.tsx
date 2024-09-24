@@ -51,15 +51,15 @@ export const ToDoContent: React.FC = () => {
       <span className="font-medium text-netral-600 text-[20px] absolute top-[.7vw] left-[22.5vw]">
         Welcome back, {authContext?.user?.username}!
       </span>
-      <button className="absolute top-[.7vw] right-[2.5vw]">
+      {/* <button className="absolute top-[.7vw] right-[2.5vw]">
         <BiSearch className="text-[24px] text-netral-600" />
-      </button>
+      </button> */}
       <div className="w-full h-full flex flex-col items-center justify-start bg-netral-100 drop-shadow-lg rounded-xl py-3 px-6 gap-y-4">
         <div className="w-full h-fit flex justify-between font-normal text-netral-600">
           <span className="text-[24px]">
             {selectedGroupID !== undefined ? selectedGroupID.title : ""}
           </span>
-          <div className="flex justify-between items-center gap-x-4 text-[20px]">
+          <div className={twMerge("flex justify-between items-center gap-x-4 text-[20px]")}>
             <div
               className="flex justify-start items-center gap-x-2 cursor-pointer"
               onClick={() =>

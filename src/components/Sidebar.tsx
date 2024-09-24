@@ -70,13 +70,7 @@ export const Sidebar: React.FC = () => {
         <FaPlusCircle
           className="text-[30px] text-utama-200 cursor-pointer"
           onClick={() => {
-            setGrupArr([
-              ...(grupArr as groupProps[]),
-              {
-                title: "New Group",
-                tasks: [],
-              },
-            ]);
+            mainContext?.createGroup({groupTitle: "New Group", userID: authContext?.user?.id as string});
           }}
         />
       </div>

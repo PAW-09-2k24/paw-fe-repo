@@ -221,7 +221,7 @@ export default function MainProvider({
 
       })
       .catch((err) => {
-        toast.error(err);
+        toast.error("Group creation failed");
         // console.log(err);
       });
   };
@@ -266,7 +266,7 @@ export default function MainProvider({
 
       })
       .catch((err) => {
-        toast.error(err);
+        toast.error("Task update failed");
         // console.log(err);
       });
   };
@@ -311,7 +311,7 @@ export default function MainProvider({
 
       })
       .catch((err) => {
-        toast.error(err);
+        toast.error("Task creation failed");
         // console.log(err);
       });
   };
