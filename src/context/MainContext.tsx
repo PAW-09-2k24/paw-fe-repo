@@ -182,7 +182,7 @@ export default function MainProvider({
       .then((res) => {
         // console.log(res.data.message);
         getGroupData(authContext?.user as userProps);
-        toast.success(res.data.message);
+        toast.success("Berhasil update group");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
