@@ -23,7 +23,7 @@ export default function ModalForm({
   if (!show) return null;
   return (
     <div className="w-[50vw] aspect-[801/605] rounded-xl bg-netral-200 drop-shadow-xl p-6 relative flex flex-col justify-evenly items-center z-10">
-      <button className="absolute top-2 right-2" onClick={handleCloseModal}>
+      <button className="absolute top-2 right-2" onClick={handleCloseModal} aria-label="Close modal">
         <FaTimes className="text-[30px] text-netral-300" />
       </button>
       <form className="w-full h-full justify-center p-6 flex flex-col gap-y-4 relative">
@@ -49,7 +49,7 @@ export default function ModalForm({
           <input
             type="date"
             name="date"
-            id="dateline"
+            id="deadline"
             className="w-full border-[1px] py-1 px-3 font-normal text-lg rounded-md border-gray-400 text-netral-300 bg-netral-100 "
             value={
               taskData.deadline

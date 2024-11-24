@@ -110,6 +110,7 @@ export const Sidebar: React.FC = () => {
                     ref={inputRef}
                     type="text"
                     className=" px-3 py-2 bg-netral-100 text-netral-600"
+                    title="Group title input"
                     value={temp?.[index].title as string}
                     onChange={(e) => {
                       setTemp(
