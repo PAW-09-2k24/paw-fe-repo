@@ -5,6 +5,8 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useMainContext } from "@/context/MainContext";
 import { useEffect, useState } from "react";
 import { groupProps } from "@/types/types";
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { getTasksArray } from "@/utils/utils";
@@ -76,13 +78,15 @@ export const ToDoContent: React.FC = () => {
               <FaPlusCircle className="text-[20px] text-utama-200 cursor-pointer" />
               <span className="text-[16px]">Add new Task</span>
             </div>
-            <div
-              className="flex justify-start items-center gap-x-2 cursor-pointer"
-              onClick={() => mainContext?.deleteGroup({ groupID: id })}
-            >
-              <FaTrash className="text-[20px] text-netral-600 cursor-pointer" />
-              <span className="text-[16px]">Delete Group</span>
-            </div>
+            {mainContext?.pageOpen !== "Calendar" && (
+              <div
+                className="flex justify-start items-center gap-x-2 cursor-pointer"
+                onClick={() => mainContext?.deleteGroup({ groupID: id })}
+              >
+                <FaTrash className="text-[20px] text-netral-600 cursor-pointer" />
+                <span className="text-[16px]">Delete Group</span>
+              </div>
+            )}
           </div>
         </div>
         <div
@@ -93,7 +97,11 @@ export const ToDoContent: React.FC = () => {
               : "flex-wrap justify-evenly"
           )}
         >
-          {selectedGroupID?.tasks.length === 0 ? (
+          {mainContext?.pageOpen === "Calendar" ? (
+            <div className="font-normal w-full max-h-[80vh] text-center items-center justify-center">
+             <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" height="100%"/>
+            </div>
+          ):  selectedGroupID?.tasks.length === 0 ? (
             <div className="text-xl font-normal w-full h-full text-center flex items-center justify-center">
               {`There is no task in this group. Let's add some task!`}
             </div>
