@@ -1,52 +1,35 @@
-import { useState, useEffect } from 'react';
-import { useAuthContext } from "@/context/AuthContext";
-import { apiRoutes } from "@/API/routes";
-import axios from 'axios';
-import { eventProps } from '@/types/types';
+import { useEffect} from 'react';
 import FullCalendar from '@fullcalendar/react';
+import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { useMainContext } from "@/context/MainContext";
 
 export const Calendar: React.FC = () => {
-    const authContext = useAuthContext();
-    const [taskList, setTaskList] = useState<eventProps[] | undefined>([]);
-    
+    const mainContext = useMainContext();
+
     useEffect(() => {
-        axios
-        .get(apiRoutes.tasks.all, {
-            params: {
-                userID: authContext?.user?.id,
-            },
-            headers: {
-                Authorization: `Bearer ${authContext?.user?.token}`,
-            },
-        })
-        .then((res) => {
-          if (Array.isArray(res.data.data)) {
-            const taskData = res.data.data.map((task: eventProps) => {
-                return {
-                    id: task.id as string,
-                    title: task.title as string,
-                    start: new Date(task.start),
-                    allDay: task.allDay,
-                };
-            });
-            setTaskList(taskData);
-        } else {
-            console.error("Unexpected response data format:", res.data);
+        mainContext.fetchTasks?.();
+    }, [mainContext]);
+
+    const handleEventClick = async (event: EventClickArg) => {
+        const taskId = event.event.id;
+        const taskData = mainContext.taskList?.find(task => task._id === taskId);
+        if (taskData) {
+            mainContext?.setTaskTemp(taskData);
+            mainContext?.setModalType("update");
+            mainContext?.setModal(true);
         }
-      })
-        .catch((error) => {
-            console.error("Error fetching tasks:", error)
-        });
-    }, [authContext]);
-    console.log(taskList);
+    };
 
     return (
+        <>
             <FullCalendar 
               plugins={[dayGridPlugin]} 
               initialView="dayGridMonth" 
               height="100%"
-              events={taskList}
+              events={mainContext.eventList}
+              eventClick={handleEventClick}
               />
+        </>
     );
 };

@@ -102,6 +102,7 @@ export default function ModalForm({
                   status: taskData.status,
                 });
               }
+              mainContext.fetchTasks?.();
               handleCloseModal();
             }}
           >
