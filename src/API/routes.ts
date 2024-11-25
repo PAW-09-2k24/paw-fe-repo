@@ -1,4 +1,4 @@
-const mainRoute = 'http://localhost:3500';
+const mainRoute = process.env.NEXT_PUBLIC_API_URL;
 
 //auth
 const loginRoute = `${mainRoute}/user/login`;
@@ -12,6 +12,7 @@ const countGroupRoute = `${mainRoute}/user/groupCount`;
 
 //tasks
 const tasksRoute = `${mainRoute}/task`;
+const allTasksRoute = `${tasksRoute}/all`;
 
 export const apiRoutes = {
   main: mainRoute,
@@ -28,5 +29,6 @@ export const apiRoutes = {
   },
   tasks: {
     main: tasksRoute,
+    all: allTasksRoute,
   },
 };

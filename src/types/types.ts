@@ -7,6 +7,13 @@ interface taskProps{
     description: string;
 }
 
+interface eventProps{
+    id: string;
+    title: string;
+    start: Date;
+    allDay: boolean;
+}
+
 interface groupProps{
     id?: string;
     title: string;
@@ -36,4 +43,4 @@ interface taskGroupCountProps{
     uncompletedCount: number;
 }
 
-export type {groupProps, taskProps, inputProps, userProps, taskGroupCountProps};
+export type {groupProps, taskProps, eventProps, inputProps, userProps, taskGroupCountProps};

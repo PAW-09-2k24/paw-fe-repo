@@ -5,11 +5,10 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useMainContext } from "@/context/MainContext";
 import { useEffect, useState } from "react";
 import { groupProps } from "@/types/types";
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { getTasksArray } from "@/utils/utils";
+import { Calendar } from "./Calendar";
 
 export const ToDoContent: React.FC = () => {
   const authContext = useAuthContext();
@@ -61,7 +60,11 @@ export const ToDoContent: React.FC = () => {
           <span className="text-[24px]">
             {selectedGroupID !== undefined ? selectedGroupID.title : ""}
           </span>
-          <div className={twMerge("flex justify-between items-center gap-x-4 text-[20px]")}>
+          <div
+            className={twMerge(
+              "flex justify-between items-center gap-x-4 text-[20px]"
+            )}
+          >
             <div
               className="flex justify-start items-center gap-x-2 cursor-pointer"
               onClick={() =>
@@ -99,9 +102,9 @@ export const ToDoContent: React.FC = () => {
         >
           {mainContext?.pageOpen === "Calendar" ? (
             <div className="font-normal w-full max-h-[80vh] text-center items-center justify-center">
-             <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" height="100%"/>
+              <Calendar />
             </div>
-          ):  selectedGroupID?.tasks.length === 0 ? (
+          ) : selectedGroupID?.tasks.length === 0 ? (
             <div className="text-xl font-normal w-full h-full text-center flex items-center justify-center">
               {`There is no task in this group. Let's add some task!`}
             </div>
