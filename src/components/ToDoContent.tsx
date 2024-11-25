@@ -65,22 +65,24 @@ export const ToDoContent: React.FC = () => {
               "flex justify-between items-center gap-x-4 text-[20px]"
             )}
           >
+            {mainContext?.pageOpen !== "Calendar" && (
             <div
-              className="flex justify-start items-center gap-x-2 cursor-pointer"
-              onClick={() =>
-                handleEdit({
-                  title: "",
-                  deadline: new Date(),
-                  status: "uncompleted",
-                  description: "",
-                  _id: id,
-                  type: "create",
-                })
-              }
-            >
-              <FaPlusCircle className="text-[20px] text-utama-200 cursor-pointer" />
-              <span className="text-[16px]">Add new Task</span>
-            </div>
+                className="flex justify-start items-center gap-x-2 cursor-pointer"
+                onClick={() =>
+                  handleEdit({
+                    title: "",
+                    deadline: new Date(),
+                    status: "uncompleted",
+                    description: "",
+                    _id: id,
+                    type: "create",
+                  })
+                }
+              >
+                <FaPlusCircle className="text-[20px] text-utama-200 cursor-pointer" />
+                <span className="text-[16px]">Add new Task</span>
+              </div>
+            )}
             {mainContext?.pageOpen !== "Calendar" && (
               <div
                 className="flex justify-start items-center gap-x-2 cursor-pointer"
@@ -101,7 +103,7 @@ export const ToDoContent: React.FC = () => {
           )}
         >
           {mainContext?.pageOpen === "Calendar" ? (
-            <div className="font-normal w-full max-h-[80vh] text-center items-center justify-center">
+            <div className="font-normal w-full max-h-[83vh] text-center items-center justify-center">
               <Calendar />
             </div>
           ) : selectedGroupID?.tasks.length === 0 ? (

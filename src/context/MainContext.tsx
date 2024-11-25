@@ -19,6 +19,7 @@ interface MainContextProps {
   pageOpen: string;
   setPageOpen: React.Dispatch<React.SetStateAction<string>>;
   group: groupProps[];
+  groupList?: groupProps[];
   setGroup: React.Dispatch<React.SetStateAction<groupProps[]>>;
   updateGroup: ({
     groupID,
@@ -73,8 +74,8 @@ interface MainContextProps {
   fetchTasks?: () => void;
   taskList?: taskProps[];
   eventList?: eventProps[];
-  modalType: "create" | "update" | "";
-  setModalType: React.Dispatch<React.SetStateAction<"create" | "update">>;
+  modalType: "create" | "update" | "create-calendar" | "";
+  setModalType: React.Dispatch<React.SetStateAction<"create" | "update" | "create-calendar" | "">>;
   deleteTask: ({taskID}:{taskID:string}) => void;
   deleteGroup: ({groupID}:{groupID:string}) => void;
   countTask?: taskGroupCountProps | undefined;
@@ -99,12 +100,11 @@ export default function MainProvider({
   const [groupTemp, setGroupTemp] = useState<groupProps | undefined>(undefined);
   const [task, setTask] = useState<taskProps[] | undefined>(undefined);
   const [taskTemp, setTaskTemp] = useState<taskProps | undefined>(undefined);
-  const [eventTemp, setEventTemp] = useState<eventProps | undefined>(undefined);
   const [pageOpen, setPageOpen] = useState<string>("to do");
   const [modal, setModal] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<taskProps[]>([]);
   const [eventList, setEventList] = useState<eventProps[]>([]);
-  const [modalType, setModalType] = useState<"create" | "update" >("update");
+  const [modalType, setModalType] = useState<"create" | "update" | "create-calendar" | "">("");
   const [countTask, setCountTask] = useState<taskGroupCountProps>();
 
   const getGroupData = useCallback((user: userProps) => {
@@ -429,6 +429,7 @@ export default function MainProvider({
         setPageOpen,
         group,
         setGroup,
+        groupList: group,
         updateGroup,
         createGroup,
         deleteGroup,
@@ -454,7 +455,7 @@ export default function MainProvider({
     >
       {modal && (
           <div className="w-screen h-screen fixed flex justify-center items-center bg-black z-10">
-            <ModalForm show={modal} type={modalType as "create" | "update"}/>
+            <ModalForm show={modal} type={modalType as "create" | "update" | "create-calendar"} groupList={group}/>
           </div>
       )}
       {children}
