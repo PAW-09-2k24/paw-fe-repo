@@ -31,3 +31,7 @@ body {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+.fc-day-today {
+  background-color: #303D4E !important; /* Ganti dengan warna yang Anda inginkan */
+}

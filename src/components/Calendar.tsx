@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
-import { EventClickArg, EventHoveringArg } from '@fullcalendar/core';
+import { EventClickArg, EventHoveringArg, EventContentArg} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useMainContext } from "@/context/MainContext";
 
@@ -25,7 +25,7 @@ export const Calendar: React.FC = () => {
         event.el.style.cursor = 'pointer';
     };
 
-    const handleCustomButtonClick = () => {
+    const handleAddTaskClick = () => {
         const emptyTask = {
             title: "",
             deadline: new Date(),
@@ -36,6 +36,21 @@ export const Calendar: React.FC = () => {
         mainContext?.setTaskTemp(emptyTask);
         mainContext?.setModalType("create-calendar");
         mainContext?.setModal(true);
+    };
+    const generateColor = (id: string) => {
+        const colors = ['#0077C0', '#4B96C3', '#104971'];
+        const colorIndex = parseInt(id, 16) % colors.length;
+        return colors[colorIndex];
+    };
+
+    const renderEventContent = (eventContent: EventContentArg) => {
+        const gradientBackground = generateColor(eventContent.event.id);
+        return (
+            <div style={{ background: gradientBackground, padding: '5px', borderRadius: '5px' }}>
+                <b>{eventContent.timeText}</b>
+                <i>{eventContent.event.title}</i>
+            </div>
+        );
     };
 
     return (
@@ -48,6 +63,7 @@ export const Calendar: React.FC = () => {
               events={mainContext?.eventList}
               eventClick={handleEventClick}
               eventMouseEnter={handleEventMouseEnter}
+              eventContent={renderEventContent}
               headerToolbar={{
                 right: 'prev,next today addTask',
                 left: 'title'
@@ -55,7 +71,7 @@ export const Calendar: React.FC = () => {
               customButtons={{
                 addTask: {
                     text: 'Add New Task',
-                    click: handleCustomButtonClick
+                    click: handleAddTaskClick
                 }}}
               />
         </>
