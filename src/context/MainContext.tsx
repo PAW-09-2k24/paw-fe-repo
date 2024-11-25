@@ -74,8 +74,8 @@ interface MainContextProps {
   fetchTasks?: () => void;
   taskList?: taskProps[];
   eventList?: eventProps[];
-  modalType: "create" | "update" | "create-calendar" | "";
-  setModalType: React.Dispatch<React.SetStateAction<"create" | "update" | "create-calendar" | "">>;
+  modalType: "create" | "update" | "create-calendar" | "update-calendar" | "";
+  setModalType: React.Dispatch<React.SetStateAction<"create" | "update" | "create-calendar" | "update-calendar" | "">>;
   deleteTask: ({taskID}:{taskID:string}) => void;
   deleteGroup: ({groupID}:{groupID:string}) => void;
   countTask?: taskGroupCountProps | undefined;
@@ -104,7 +104,7 @@ export default function MainProvider({
   const [modal, setModal] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<taskProps[]>([]);
   const [eventList, setEventList] = useState<eventProps[]>([]);
-  const [modalType, setModalType] = useState<"create" | "update" | "create-calendar" | "">("");
+  const [modalType, setModalType] = useState<"create" | "update" | "create-calendar" | "update-calendar" |"">("");
   const [countTask, setCountTask] = useState<taskGroupCountProps>();
 
   const getGroupData = useCallback((user: userProps) => {

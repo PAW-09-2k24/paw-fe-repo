@@ -16,7 +16,7 @@ export const Calendar: React.FC = () => {
         const taskData = mainContext?.taskList?.find(task => task._id === taskId);
         if (taskData) {
             mainContext?.setTaskTemp(taskData);
-            mainContext?.setModalType("update");
+            mainContext?.setModalType("update-calendar");
             mainContext?.setModal(true);
         }
     };

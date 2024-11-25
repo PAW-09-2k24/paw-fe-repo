@@ -10,7 +10,7 @@ export default function ModalForm({
   groupList = [],
 }: {
   show: boolean;
-  type: "create" | "update" | "create-calendar";
+  type: "create" | "update" | "create-calendar" | "update-calendar";
   groupList: groupProps[];
 }) {
   const mainContext = useMainContext();
@@ -72,7 +72,7 @@ export default function ModalForm({
             }
           />
         </div>
-        {type === "create-calendar" && (
+        {(type === "create-calendar" || "update-calendar" )&& (
           <div className="w-full flex flex-col justify-center items-start text-sm text-netral-600 relative">
             <label htmlFor="group" className="text-start w-full ">
               Group
@@ -119,7 +119,7 @@ export default function ModalForm({
           <button
             className="text-netral-600 bg-utama-200 hover:bg-blue-300 hover:duration-300 rounded-xl p-2"
             onClick={() => {
-              if (type === "update") {
+              if (type === "update" || type === "update-calendar") {
                 mainContext?.updateTask({
                   taskID: taskData._id,
                   title: taskData.title,
