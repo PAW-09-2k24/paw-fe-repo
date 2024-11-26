@@ -8,6 +8,8 @@ import { groupProps } from "@/types/types";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { getTasksArray } from "@/utils/utils";
+import { Calendar } from "./Calendar";
+// import Calendar from "react-calendar";
 
 export const ToDoContent: React.FC = () => {
   const authContext = useAuthContext();
@@ -20,6 +22,20 @@ export const ToDoContent: React.FC = () => {
   const [selectedGroupID, setSelectedGroupID] = useState<groupProps>(
     mainContext?.group.find((group) => group.id === id) as groupProps
   );
+
+// const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+// const handleClickDay = (date: Date) => {
+//   setSelectedDate(date);
+//   handleEdit({
+//     title: "",
+//     deadline: date,
+//     status: "uncompleted",
+//     description: "",
+//     _id: id,
+//     type: "create",
+//   });
+// };
 
   const handleEdit = ({
     title,
@@ -59,30 +75,38 @@ export const ToDoContent: React.FC = () => {
           <span className="text-[24px]">
             {selectedGroupID !== undefined ? selectedGroupID.title : ""}
           </span>
-          <div className={twMerge("flex justify-between items-center gap-x-4 text-[20px]")}>
+          <div
+            className={twMerge(
+              "flex justify-between items-center gap-x-4 text-[20px]"
+            )}
+          >
+            {mainContext?.pageOpen !== "Calendar" && (
             <div
-              className="flex justify-start items-center gap-x-2 cursor-pointer"
-              onClick={() =>
-                handleEdit({
-                  title: "",
-                  deadline: new Date(),
-                  status: "uncompleted",
-                  description: "",
-                  _id: id,
-                  type: "create",
-                })
-              }
-            >
-              <FaPlusCircle className="text-[20px] text-utama-200 cursor-pointer" />
-              <span className="text-[16px]">Add new Task</span>
-            </div>
-            <div
-              className="flex justify-start items-center gap-x-2 cursor-pointer"
-              onClick={() => mainContext?.deleteGroup({ groupID: id })}
-            >
-              <FaTrash className="text-[20px] text-netral-600 cursor-pointer" />
-              <span className="text-[16px]">Delete Group</span>
-            </div>
+                className="flex justify-start items-center gap-x-2 cursor-pointer"
+                onClick={() =>
+                  handleEdit({
+                    title: "",
+                    deadline: new Date(),
+                    status: "uncompleted",
+                    description: "",
+                    _id: id,
+                    type: "create",
+                  })
+                }
+              >
+                <FaPlusCircle className="text-[20px] text-utama-200 cursor-pointer" />
+                <span className="text-[16px]">Add new Task</span>
+              </div>
+            )}
+            {mainContext?.pageOpen !== "Calendar" && (
+              <div
+                className="flex justify-start items-center gap-x-2 cursor-pointer"
+                onClick={() => mainContext?.deleteGroup({ groupID: id })}
+              >
+                <FaTrash className="text-[20px] text-netral-600 cursor-pointer" />
+                <span className="text-[16px]">Delete Group</span>
+              </div>
+            )}
           </div>
         </div>
         <div
@@ -93,7 +117,11 @@ export const ToDoContent: React.FC = () => {
               : "flex-wrap justify-evenly"
           )}
         >
-          {selectedGroupID?.tasks.length === 0 ? (
+          {mainContext?.pageOpen === "Calendar" ? (
+            <div className="font-normal w-full max-h-[83vh] text-center items-center justify-center">
+              <Calendar />
+            </div>
+          ) : selectedGroupID?.tasks.length === 0 ? (
             <div className="text-xl font-normal w-full h-full text-center flex items-center justify-center">
               {`There is no task in this group. Let's add some task!`}
             </div>

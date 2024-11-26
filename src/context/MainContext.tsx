@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { groupProps, taskGroupCountProps, taskProps, userProps } from "@/types/types";
+import { groupProps, taskGroupCountProps, eventProps, taskProps, userProps } from "@/types/types";
 import axios from "axios";
 import { apiRoutes } from "@/API/routes";
 import { useAuthContext } from "./AuthContext";
@@ -19,6 +19,7 @@ interface MainContextProps {
   pageOpen: string;
   setPageOpen: React.Dispatch<React.SetStateAction<string>>;
   group: groupProps[];
+  groupList?: groupProps[];
   setGroup: React.Dispatch<React.SetStateAction<groupProps[]>>;
   updateGroup: ({
     groupID,
@@ -70,8 +71,11 @@ interface MainContextProps {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   taskTemp?: taskProps;
   setTaskTemp: React.Dispatch<React.SetStateAction<taskProps | undefined>>;
-  modalType: "create" | "update" | "";
-  setModalType: React.Dispatch<React.SetStateAction<"create" | "update">>;
+  fetchTasks?: () => void;
+  taskList?: taskProps[];
+  eventList?: eventProps[];
+  modalType: "create" | "update" | "create-calendar" | "update-calendar" | "";
+  setModalType: React.Dispatch<React.SetStateAction<"create" | "update" | "create-calendar" | "update-calendar" | "">>;
   deleteTask: ({taskID}:{taskID:string}) => void;
   deleteGroup: ({groupID}:{groupID:string}) => void;
   countTask?: taskGroupCountProps | undefined;
@@ -96,9 +100,11 @@ export default function MainProvider({
   const [groupTemp, setGroupTemp] = useState<groupProps | undefined>(undefined);
   const [task, setTask] = useState<taskProps[] | undefined>(undefined);
   const [taskTemp, setTaskTemp] = useState<taskProps | undefined>(undefined);
-  const [pageOpen, setPageOpen] = useState<string>("to do");
+  const [pageOpen, setPageOpen] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<"create" | "update" >("update");
+  const [taskList, setTaskList] = useState<taskProps[]>([]);
+  const [eventList, setEventList] = useState<eventProps[]>([]);
+  const [modalType, setModalType] = useState<"create" | "update" | "create-calendar" | "update-calendar" |"">("");
   const [countTask, setCountTask] = useState<taskGroupCountProps>();
 
   const getGroupData = useCallback((user: userProps) => {
@@ -131,6 +137,34 @@ export default function MainProvider({
         // console.log(err);
       });
   }, []);
+  const fetchTasks = useCallback(() => {
+    axios
+      .get(apiRoutes.tasks.all, {
+        params: {
+          userID: authContext?.user?.id,
+        },
+        headers: {
+          Authorization: `Bearer ${authContext?.user?.token}`,
+        },
+      })
+      .then((res) => {
+        if (Array.isArray(res.data.data)) {
+          setTaskList(res.data.data);
+          const events = res.data.data.map((task: taskProps) => ({
+            id: task._id,
+            title: task.title,
+            start: task.deadline,
+            allDay: true,
+          }));
+          setEventList(events);
+        } else {
+          console.error("Unexpected response data format:", res.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
+  }, [authContext]);
   const getCountTask = useCallback((user: userProps) => {
     axios
       .get(apiRoutes.groups.count, {
@@ -384,8 +418,9 @@ export default function MainProvider({
     if (authContext?.user && pageOpen) {
        getGroupData(authContext.user); 
        getCountTask(authContext.user);
+       fetchTasks();
     }
-  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal, getCountTask]);
+  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal, getCountTask, fetchTasks]);
 
 
   return (
@@ -395,6 +430,7 @@ export default function MainProvider({
         setPageOpen,
         group,
         setGroup,
+        groupList: group,
         updateGroup,
         createGroup,
         deleteGroup,
@@ -404,11 +440,14 @@ export default function MainProvider({
         setTask,
         modal,
         setModal,
+        fetchTasks,
         taskTemp,
         setTaskTemp,
         updateTask,
         createTask,
         deleteTask,
+        taskList,
+        eventList,
         modalType,
         setModalType,
         countTask,
@@ -417,7 +456,7 @@ export default function MainProvider({
     >
       {modal && (
           <div className="w-screen h-screen fixed flex justify-center items-center bg-black z-10">
-            <ModalForm show={modal} type={modalType as "create" | "update"}/>
+            <ModalForm show={modal} type={modalType as "create" | "update" | "create-calendar"} groupList={group}/>
           </div>
       )}
       {children}

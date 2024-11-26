@@ -3,7 +3,7 @@ import { userProps } from "@/types/types";
 import { useState, createContext, useContext, useEffect, useRef } from "react";
 import { apiRoutes } from "@/API/routes";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import cookiesHandler from "@/API/cookiesHandler";
 import logoutHandler from "@/API/logoutHandler";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
@@ -31,6 +31,7 @@ export default function AuthProvider({
 }) {
   const router = useRouter();
   const [user, setUser] = useState<userProps | undefined>(undefined);
+  const pathname = usePathname();
   const onLogin = ({
     username,
     password,
@@ -97,6 +98,9 @@ export default function AuthProvider({
       }); 
       // console.log("USER: ",userData);
       // console.log("TOKEN: ",token);
+    }
+    else if (pathname === "/login"){
+      return token;
     }
     else {
       router.push("/");

@@ -11,7 +11,7 @@ import { groupProps, taskGroupCountProps } from "@/types/types";
 // const Group: string[] = ["grup 1", "grup 2", "grup 3"];
 const Tasks: string[] = ["To do", "Done"];
 
-const hiddenArr = ["/", "/register", "/testFitur"];
+const hiddenArr = ["/", "/register", "/testFitur", "/login"];
 
 export const Sidebar: React.FC = () => {
   const router = useRouter();
@@ -75,7 +75,26 @@ export const Sidebar: React.FC = () => {
         />
       </div>
       {/* Main Contents */}
-      <div className="w-full h-fit flex flex-col items-center justify-center gap-y-10 p-1">
+      <div className="w-full h-fit flex flex-col items-left justify-center gap-y-10 p-1">
+        {/* Calendar */}
+        <div
+          className="font-bold text-[16px] text-start w-fit h-fit gap-y-4"
+          onClick={() => {
+          mainContext?.setPageOpen("Calendar");
+          router.push("/to-do/calendar");
+          }}
+        >
+          <span
+            className={twMerge(
+              "font-bold text-[16px] w-full text-start cursor-pointer",
+              mainContext?.pageOpen === "Calendar"
+                ? "bg-netral-600 text-netral-100 rounded-3xl px-3 py-2"
+                : ""
+            )}
+          >
+            Calendar
+          </span>
+        </div>
         {/* Group */}
         <div className="w-full h-fit flex flex-col items-center justify-center gap-y-4">
           <span className="font-bold text-[16px] w-full text-start">

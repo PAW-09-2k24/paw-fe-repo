@@ -3,7 +3,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import MainProvider from "@/context/MainContext";
 import AuthProvider from "@/context/AuthContext";
-import Image from "next/image";
+// import Image from "next/image";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -31,9 +31,9 @@ export default function RootLayout({
         <Provider>
           <>
             <Sidebar />
-            <div className="absolute w-screen h-screen z-0">
+            {/* <div className="absolute w-screen h-screen z-0">
               <Image src="/bg.png" alt="logo" fill objectFit="cover" />
-            </div>
+            </div> */}
             {children}
           </>
         </Provider>
