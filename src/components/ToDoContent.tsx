@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { getTasksArray } from "@/utils/utils";
 import { Calendar } from "./Calendar";
-import Calendar from "react-calendar";
+// import Calendar from "react-calendar";
 
 export const ToDoContent: React.FC = () => {
   const authContext = useAuthContext();
@@ -23,19 +23,19 @@ export const ToDoContent: React.FC = () => {
     mainContext?.group.find((group) => group.id === id) as groupProps
   );
 
-const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+// const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-const handleClickDay = (date: Date) => {
-  setSelectedDate(date);
-  handleEdit({
-    title: "",
-    deadline: date,
-    status: "uncompleted",
-    description: "",
-    _id: id,
-    type: "create",
-  });
-};
+// const handleClickDay = (date: Date) => {
+//   setSelectedDate(date);
+//   handleEdit({
+//     title: "",
+//     deadline: date,
+//     status: "uncompleted",
+//     description: "",
+//     _id: id,
+//     type: "create",
+//   });
+// };
 
   const handleEdit = ({
     title,
