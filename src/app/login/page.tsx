@@ -7,6 +7,7 @@ import { InputForm } from "@/components/InputForm";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useAuthContext } from "@/context/AuthContext";
+import GoogleLoginPortal from "@/components/LoginGoogle";
 
 export default function Page() {
   const router = useRouter();
@@ -91,6 +92,9 @@ export default function Page() {
               >
                 Log In
               </button>
+              <div id="google-login-container" className="w-full mt-4">
+                <GoogleLoginPortal />
+              </div>
               <div className="flex w-full justify-start gap-x-2">
                 <span className="text-netral-600">{`Don't have account?`}</span>
                 <button
