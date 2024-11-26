@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { userProps } from "@/types/types";
 import { useState, createContext, useContext, useEffect, useRef } from "react";
@@ -115,7 +116,7 @@ export default function AuthProvider({
     .then((res) => {
       toast.success(res.data.message);
       // console.log(res.data.message);
-      router.push("/");
+      router.push("/to-do");
     })
     .catch((err) => {
       toast.error(err.response.data.message);
@@ -125,9 +126,9 @@ export default function AuthProvider({
 
   const getCookiesRef = useRef(getCookies);
   
-  useEffect(() => {
-    if (router) getCookiesRef.current();
-  },[router]);
+  // useEffect(() => {
+  //   // if (router) getCookiesRef.current();
+  // },[router]);
 
   return (
     <AuthContext.Provider value={{ user, setUser, onLogin, onLogout, onRegister }}>
