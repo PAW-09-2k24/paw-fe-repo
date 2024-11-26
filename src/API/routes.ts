@@ -1,4 +1,4 @@
-const mainRoute = 'https://paw-be-eight.vercel.app/';
+const mainRoute = process.env.NEXT_PUBLIC_API_URL;
 
 //auth
 const loginRoute = `${mainRoute}/user/login`;
