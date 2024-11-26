@@ -37,6 +37,13 @@ export default function Page() {
   
   return (
     <div className=" w-screen h-screen relative flex justify-center items-center text-main bg-netral-100">
+      <div 
+        className="absolute top-10 left-11 text-utama-400 hover:underline cursor-pointer"
+        onClick={() => router.push("/")}
+      >
+        Kembali ke Landing Page
+
+      </div>
       {/* Login Section */}
       <div
         className={twMerge(

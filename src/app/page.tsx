@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useAuthContext } from "@/context/AuthContext";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import LandingContent from "@/components/LandingContent";
 export default function Home() {
   return (
     <div className="App z-10">
@@ -107,7 +108,7 @@ export default function Home() {
         <ParallaxLayer offset={1} speed={0.1}>
           <div className="animation_layer parallax">
             <div className="bg-black w-screen h-screen">
-              
+              <LandingContent/>
             </div>
           </div>
         </ParallaxLayer>
