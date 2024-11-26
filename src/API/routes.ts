@@ -1,4 +1,4 @@
-const mainRoute = 'http://localhost:3500';
+const mainRoute = 'https://paw-be-eight.vercel.app/';
 
 //auth
 const loginRoute = `${mainRoute}/user/login`;
