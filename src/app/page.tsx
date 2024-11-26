@@ -4,6 +4,7 @@ import { groupProps, taskProps } from "@/types/types";
 import { ButtonHTMLAttributes, MouseEventHandler, useEffect, useState } from "react";
 import Image from "next/image";
 import { InputForm } from "@/components/InputForm";
+import GoogleLoginPortal from "@/components/LoginGoogle";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useAuthContext } from "@/context/AuthContext";
@@ -84,6 +85,9 @@ export default function Home() {
               >
                 Log In
               </button>
+              <div id="google-login-container" className="w-full mt-4">
+                <GoogleLoginPortal />
+              </div>
               <div className="flex w-full justify-start gap-x-2">
                 <span className="text-netral-600">{`Don't have account?`}</span>
                 <button
