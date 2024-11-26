@@ -1,7 +1,7 @@
 import { Dispatch, RefObject } from "react";
 import { Text, Flex, Box, Textarea } from "@chakra-ui/react";
 import axios from "axios";
-import { ChatStateType, HistoryStateType } from "../types";
+import { ChatStateType, HistoryStateType } from "../types/chat";
 import { Search2Icon } from "@chakra-ui/icons";
 import { Spinner } from "@chakra-ui/react";
 
