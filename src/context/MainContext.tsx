@@ -100,7 +100,7 @@ export default function MainProvider({
   const [groupTemp, setGroupTemp] = useState<groupProps | undefined>(undefined);
   const [task, setTask] = useState<taskProps[] | undefined>(undefined);
   const [taskTemp, setTaskTemp] = useState<taskProps | undefined>(undefined);
-  const [pageOpen, setPageOpen] = useState<string>("");
+  const [pageOpen, setPageOpen] = useState<string>("to-do");
   const [modal, setModal] = useState<boolean>(false);
   const [taskList, setTaskList] = useState<taskProps[]>([]);
   const [eventList, setEventList] = useState<eventProps[]>([]);
@@ -133,7 +133,7 @@ export default function MainProvider({
         setGroup(groupData);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err.response?.data?.message);
         // console.log(err);
       });
   }, []);
