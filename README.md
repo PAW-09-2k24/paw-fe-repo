@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Pengumpulan Tugas Akhir PAW
+
+Link Website = https://paw-09.vercel.app/
+
+Link Video = 
+
+Link Slides = https://drive.google.com/drive/folders/1OvuIqpLv8JsaA090xZLHpFaHCOSiBd1K?usp=sharing
+
 ## Getting Started
 
 First, run the development server:
