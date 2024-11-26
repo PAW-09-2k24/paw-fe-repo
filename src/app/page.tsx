@@ -9,6 +9,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { InputForm } from "@/components/InputForm";
+import GoogleLoginPortal from "@/components/LoginGoogle";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useAuthContext } from "@/context/AuthContext";
