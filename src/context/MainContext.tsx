@@ -418,8 +418,9 @@ export default function MainProvider({
     if (authContext?.user && pageOpen) {
        getGroupData(authContext.user); 
        getCountTask(authContext.user);
+       fetchTasks();
     }
-  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal, getCountTask]);
+  }, [authContext?.user, getGroupData, taskTemp, pageOpen, groupTemp, modal, getCountTask, fetchTasks]);
 
 
   return (
