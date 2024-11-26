@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 Link Website = https://paw-09.vercel.app/
 
-Link Video = 
+Link Video = https://bit.ly/4g2Ka22
 
 Link Slides = https://drive.google.com/drive/folders/1OvuIqpLv8JsaA090xZLHpFaHCOSiBd1K?usp=sharing
 
