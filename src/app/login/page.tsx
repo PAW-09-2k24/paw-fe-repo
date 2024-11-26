@@ -12,7 +12,7 @@ export default function Page() {
   const router = useRouter();
   const authContext = useAuthContext();
   if (authContext?.user) {
-    router.push("/to-do");
+    // router.push("/to-do");
   }
   const [type, setType] = useState<"login" | "register">("login");
   const [username, setUsername] = useState<string>("");
