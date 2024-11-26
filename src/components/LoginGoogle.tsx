@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 const GoogleLogin: React.FC = () => {
   const handleGoogleLogin = async () => {
-    window.open("http://localhost:3500/auth/google", "_self");
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, "_self");
   };
 
   return (
