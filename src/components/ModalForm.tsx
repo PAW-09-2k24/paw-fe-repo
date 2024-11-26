@@ -2,24 +2,35 @@
 import { useMainContext } from "@/context/MainContext";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
-import { taskProps } from "@/types/types";
+import { groupProps, taskProps } from "@/types/types";
 
 export default function ModalForm({
   show,
   type = "update",
+  groupList = [],
 }: {
   show: boolean;
-  type: "create" | "update";
+  type: "create" | "update" | "create-calendar" | "update-calendar";
+  groupList: groupProps[];
 }) {
   const mainContext = useMainContext();
   const [taskData, setTaskData] = useState<taskProps>(
     mainContext?.taskTemp as taskProps
   );
+
   // console.log("TASKDATA: ", taskData);
   const handleCloseModal = () => {
     mainContext?.setTaskTemp(undefined);
     mainContext?.setModal(false);
   };
+
+  const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedGroup = groupList.find(group => group.id === e.target.value);
+    if (selectedGroup !== undefined) {
+      setTaskData({ ...taskData, _id: selectedGroup.id || "" });
+    }
+  };
+
   if (!show) return null;
   return (
     <div className="w-[50vw] aspect-[801/605] rounded-xl bg-netral-200 drop-shadow-xl p-6 relative flex flex-col justify-evenly items-center z-10">
@@ -61,6 +72,29 @@ export default function ModalForm({
             }
           />
         </div>
+        {(type === "create-calendar" || "update-calendar" )&& (
+          <div className="w-full flex flex-col justify-center items-start text-sm text-netral-600 relative">
+            <label htmlFor="group" className="text-start w-full ">
+              Group
+            </label>
+            <select
+              name="group"
+              id="group"
+              className="w-full border-[1px] py-1 px-3 font-normal text-lg rounded-md border-gray-400 text-netral-300 bg-netral-100"
+              value={taskData._id}
+              onChange={handleGroupChange}
+            >
+              <option value="" disabled>
+                {groupList.length > 0 ? "Select a group" : "Create a group first"}
+              </option>
+              {groupList?.map((group) => (
+                <option key={group.id} value={group.id}>
+                  {group.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="w-full flex flex-col justify-center items-start text-sm text-netral-600 relative">
           <label htmlFor="description" className="text-start w-full ">
             description
@@ -85,7 +119,7 @@ export default function ModalForm({
           <button
             className="text-netral-600 bg-utama-200 hover:bg-blue-300 hover:duration-300 rounded-xl p-2"
             onClick={() => {
-              if (type === "update") {
+              if (type === "update" || type === "update-calendar") {
                 mainContext?.updateTask({
                   taskID: taskData._id,
                   title: taskData.title,
@@ -93,7 +127,7 @@ export default function ModalForm({
                   description: taskData.description,
                   status: taskData.status,
                 });
-              } else if (type === "create") {
+              } else if (type === "create" || type === "create-calendar") {
                 mainContext?.createTask({
                   groupID: taskData._id,
                   title: taskData.title,
@@ -102,6 +136,7 @@ export default function ModalForm({
                   status: taskData.status,
                 });
               }
+              mainContext?.fetchTasks?.();
               handleCloseModal();
             }}
           >
