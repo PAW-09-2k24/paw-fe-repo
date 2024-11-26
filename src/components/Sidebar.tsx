@@ -11,7 +11,7 @@ import { groupProps, taskGroupCountProps } from "@/types/types";
 // const Group: string[] = ["grup 1", "grup 2", "grup 3"];
 const Tasks: string[] = ["To do", "Done"];
 
-const hiddenArr = ["/", "/register", "/testFitur"];
+const hiddenArr = ["/", "/register", "/testFitur", "/login"];
 
 export const Sidebar: React.FC = () => {
   const router = useRouter();
