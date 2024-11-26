@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { apiRoutes } from "@/API/routes";
 
 const GoogleLogin: React.FC = () => {
   const handleGoogleLogin = async () => {
-    window.open(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, "_self");
+    window.open(`${apiRoutes.main}/auth/google`, "_self");
   };
 
   return (
