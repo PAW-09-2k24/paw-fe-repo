@@ -126,9 +126,9 @@ export default function AuthProvider({
 
   const getCookiesRef = useRef(getCookies);
   
-  // useEffect(() => {
-  //   // if (router) getCookiesRef.current();
-  // },[router]);
+  useEffect(() => {
+    if (router) getCookiesRef.current();
+  },[router]);
 
   return (
     <AuthContext.Provider value={{ user, setUser, onLogin, onLogout, onRegister }}>
